@@ -6,36 +6,26 @@ This workspace provides an optimized node for detecting ArUco markers, estimatin
 
 To run the system, you need to open **3 separate terminals**. Follow these steps exactly:
 
+```bash
+colcon build --packages-select opencv_tools
+```
 ### Terminal 1: Camera Driver
 ```bash
-conda deactivate
-source /opt/ros/jazzy/setup.bash
+source install/setup.bash
 ros2 launch realsense2_camera rs_launch.py
 ```
 
 ### Terminal 2: ArUco Processor (Combined Launch)
 To start both the camera and the processor with a single command:
 ```bash
-conda deactivate
-source /opt/ros/jazzy/setup.bash
-source ~/Documents/aruco_ws/install/setup.bash
-ros2 launch opencv_tools aruco_multi.launch.py
+source install/setup.bash
+ros2 run opencv_tools aruco_processor
 ```
-
-### 📌 Multi-Tag Configuration
-If you have markers of different sizes, you can specify them using the `marker_sizes` parameter (JSON format):
-```bash
-ros2 launch opencv_tools aruco_multi.launch.py marker_sizes:='{"0": 0.05, "1": 0.12}'
-```
-- Marker ID `0` is 5cm.
-- Marker ID `1` is 12cm.
-- Any other detected markers will use the default `marker_size` (0.05m).
 
 ### Terminal 3: Visualization (RQT)
 ```bash
 # IMPORTANT: Run this in a clean terminal WITHOUT the virtual environment active
-conda deactivate
-source /opt/ros/jazzy/setup.bash
+source install/setup.bash
 ros2 run rqt_image_view rqt_image_view
 ```
 *In RQT, select the topic:* `/aruco/image_annotated`
@@ -60,24 +50,3 @@ ros2 run opencv_tools aruco_processor --ros-args -p marker_size:=0.07 -p diction
 ```
 - `marker_size`: Length of the marker side in meters (default: `0.05`).
 - `dictionary`: ArUco dictionary to use (default: `DICT_ARUCO_ORIGINAL`).
-
-
-
-
-
-header:
-  stamp:
-    sec: 1769680209
-    nanosec: 116428711
-  frame_id: camera_color_optical_frame
-poses:
-- position:
-    x: 0.1953449306048083
-    y: 0.0027433058560438054
-    z: 0.5379345201479184
-  orientation:
-    x: -0.26246015330163197
-    y: -0.1569153618687383
-    z: -0.6660395415862801
-    w: 0.6803554704579252
----
