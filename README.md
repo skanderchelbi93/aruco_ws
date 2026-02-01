@@ -29,7 +29,10 @@ source install/setup.bash
 ros2 run rqt_image_view rqt_image_view
 ```
 *In RQT, select the topic:* `/aruco/image_annotated`
-
+*In Bash for Obj pose, select the topic:* `/output`
+```bash
+ros2 topic echo --once /output
+```
 ---
 
 ## 🛠️ Environment Details
